@@ -293,7 +293,16 @@ ks_err ks_open(ks_arch arch, int mode, ks_engine **result)
                     case KS_MODE_BIG_ENDIAN | KS_MODE_THUMB:
                         TripleName = "thumbebv7";
                         break;
-
+                    case KS_MODE_BIG_ENDIAN | KS_MODE_V4 | KS_MODE_ARM:
+                        TripleName = "armv4teb";
+                        break;
+                    case KS_MODE_BIG_ENDIAN | KS_MODE_XSCALE | KS_MODE_ARM:
+                        TripleName = "xscaleeb";
+                        break;
+                    case KS_MODE_BIG_ENDIAN | KS_MODE_V5 | KS_MODE_ARM:
+                        TripleName = "armv5eb";
+                        break;
+ 
                     // little-endian
                     case KS_MODE_LITTLE_ENDIAN | KS_MODE_V8 | KS_MODE_ARM:
                         TripleName = "armv8";
@@ -306,6 +315,15 @@ ks_err ks_open(ks_arch arch, int mode, ks_engine **result)
                         break;
                     case KS_MODE_LITTLE_ENDIAN | KS_MODE_THUMB:
                         TripleName = "thumbv7";
+                        break;
+                    case KS_MODE_LITTLE_ENDIAN | KS_MODE_V4 | KS_MODE_ARM:
+                        TripleName = "armv4t";
+                        break;
+                    case KS_MODE_LITTLE_ENDIAN | KS_MODE_XSCALE | KS_MODE_ARM:
+                        TripleName = "xscale";
+                        break;
+                    case KS_MODE_LITTLE_ENDIAN | KS_MODE_V5 | KS_MODE_ARM:
+                        TripleName = "armv5";
                         break;
                 }
 
@@ -540,6 +558,7 @@ ks_err ks_close(ks_engine *ks)
 KEYSTONE_EXPORT
 ks_err ks_option(ks_engine *ks, ks_opt_type type, size_t value)
 {
+    ks->MAI->setRadix(16);
     switch(type) {
         case KS_OPT_SYNTAX:
             if (ks->arch != KS_ARCH_X86)

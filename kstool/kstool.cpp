@@ -36,6 +36,12 @@ static void usage(char *prog)
     if (ks_arch_supported(KS_ARCH_ARM)) {
         printf("        arm:       ARM - little endian\n");
         printf("        armbe:     ARM - big endian\n");
+        printf("        armv4t:    ARM V4T - little endian\n");
+        printf("        armv4tbe:  ARM V4T - big endian\n");
+        printf("        armv5:     ARM V5 - little endian\n");
+        printf("        armv5be:   ARM V5 - big endian\n");
+        printf("        xscale:    XSCALE - little endian\n");
+        printf("        xscale:    XSCALE - big endian\n");
         printf("        thumb:     Thumb - little endian\n");
         printf("        thumbbe:   Thumb - big endian\n");
         printf("        armv8:     ARM V8 - little endian\n");
@@ -207,6 +213,31 @@ int main(int argc, char **argv)
     if (!strcmp(mode, "armbe")) {
         err = ks_open(KS_ARCH_ARM, KS_MODE_ARM+KS_MODE_BIG_ENDIAN, &ks);
     }
+
+    if (!strcmp(mode, "xscale")) {
+        err = ks_open(KS_ARCH_ARM, KS_MODE_XSCALE+KS_MODE_LITTLE_ENDIAN+KS_MODE_ARM, &ks);
+    }
+
+    if (!strcmp(mode, "xscalebe")) {
+        err = ks_open(KS_ARCH_ARM, KS_MODE_XSCALE+KS_MODE_BIG_ENDIAN+KS_MODE_ARM, &ks);
+    }
+
+    if (!strcmp(mode, "armv4t")) {
+        err = ks_open(KS_ARCH_ARM, KS_MODE_V4+KS_MODE_LITTLE_ENDIAN+KS_MODE_ARM, &ks);
+    }
+
+    if (!strcmp(mode, "armv4tbe")) {
+        err = ks_open(KS_ARCH_ARM, KS_MODE_V4+KS_MODE_BIG_ENDIAN+KS_MODE_ARM, &ks);
+    }
+
+    if (!strcmp(mode, "armv5")) {
+        err = ks_open(KS_ARCH_ARM, KS_MODE_V5+KS_MODE_LITTLE_ENDIAN+KS_MODE_ARM, &ks);
+    }
+
+    if (!strcmp(mode, "armv5be")) {
+        err = ks_open(KS_ARCH_ARM, KS_MODE_V5+KS_MODE_BIG_ENDIAN+KS_MODE_ARM, &ks);
+    }
+
 
     if (!strcmp(mode, "thumb")) {
         err = ks_open(KS_ARCH_ARM, KS_MODE_THUMB+KS_MODE_LITTLE_ENDIAN, &ks);

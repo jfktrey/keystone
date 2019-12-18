@@ -69,7 +69,13 @@ if __name__ == '__main__':
     test_ks(KS_ARCH_ARM, KS_MODE_ARM + KS_MODE_BIG_ENDIAN, b"sub r1, r2, r5")
     test_ks(KS_ARCH_ARM, KS_MODE_THUMB, b"movs r4, #0xf0")
     test_ks(KS_ARCH_ARM, KS_MODE_THUMB + KS_MODE_BIG_ENDIAN, b"movs r4, #0xf0")
-
+    test_ks(KS_ARCH_ARM, KS_MODE_ARM + KS_MODE_V4, b"nop")
+    test_ks(KS_ARCH_ARM, KS_MODE_ARM + KS_MODE_BIG_ENDIAN + KS_MODE_V4, b"nop")
+    test_ks(KS_ARCH_ARM, KS_MODE_ARM + KS_MODE_XSCALE, b"nop")
+    test_ks(KS_ARCH_ARM, KS_MODE_ARM + KS_MODE_BIG_ENDIAN + KS_MODE_XSCALE, b"nop")
+    test_ks(KS_ARCH_ARM, KS_MODE_ARM + KS_MODE_V5, b"nop")
+    test_ks(KS_ARCH_ARM, KS_MODE_ARM + KS_MODE_BIG_ENDIAN + KS_MODE_V5, b"nop")
+ 
     # ARM64
     test_ks(KS_ARCH_ARM64, KS_MODE_LITTLE_ENDIAN, b"ldr w1, [sp, #0x8]")
 

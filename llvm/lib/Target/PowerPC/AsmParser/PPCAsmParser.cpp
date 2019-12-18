@@ -503,25 +503,13 @@ public:
   }
   bool isTLSReg() const { return Kind == TLSRegister; }
   bool isDirectBr() const {
-    if (Kind == Expression)
-      return true;
-    if (Kind != Immediate)
-      return false;
-    // Operand must be 64-bit aligned, signed 27-bit immediate.
-    if ((getImm() & 3) != 0)
-      return false;
-    if (isInt<26>(getImm()))
-      return true;
-    if (!IsPPC64) {
-      // In 32-bit mode, large 32-bit quantities wrap around.
-      if (isUInt<32>(getImm()) && isInt<26>(static_cast<int32_t>(getImm())))
-        return true;
-    }
-    return false;
+      return (Kind == Expression)
+             ||((Kind == Immediate) && ((getImm() & 3) == 0));
   }
-  bool isCondBr() const { return Kind == Expression ||
-                                 (Kind == Immediate && isInt<16>(getImm()) &&
-                                  (getImm() & 3) == 0); }
+  bool isCondBr() const {
+      return (Kind == Expression)
+            ||((Kind == Immediate) && ((getImm() & 3) == 0));
+  }
   bool isRegNumber() const { return Kind == Immediate && isUInt<5>(getImm()); }
   bool isVSRegNumber() const { return Kind == Immediate && isUInt<6>(getImm()); }
   bool isCCRegNumber() const { return (Kind == Expression
@@ -828,6 +816,7 @@ addNegOperand(MCInst &Inst, MCOperand &Op, MCContext &Ctx) {
 void PPCAsmParser::ProcessInstruction(MCInst &Inst,
                                       const OperandVector &Operands) {
   int Opcode = Inst.getOpcode();
+  uint64_t address = Inst.getAddress();
   switch (Opcode) {
   case PPC::DCBTx:
   case PPC::DCBTT:
@@ -1193,6 +1182,8 @@ void PPCAsmParser::ProcessInstruction(MCInst &Inst,
     break;
   }
   }
+  // if original instruction was overwritten, need to preserve its address
+  Inst.setAddress(address);
 }
 
 bool PPCAsmParser::MatchAndEmitInstruction(SMLoc IDLoc, unsigned &Opcode,

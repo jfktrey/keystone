@@ -36,7 +36,13 @@ class TestAll(regress.RegressTest):
         self.kstest(KS_ARCH_ARM, KS_MODE_ARM + KS_MODE_BIG_ENDIAN, b"sub r1, r2, r5", [ 0xe0, 0x42, 0x10, 0x05 ])
         self.kstest(KS_ARCH_ARM, KS_MODE_THUMB, b"movs r4, #0xf0", [ 0xf0, 0x24 ])
         self.kstest(KS_ARCH_ARM, KS_MODE_THUMB + KS_MODE_BIG_ENDIAN, b"movs r4, #0xf0", [ 0x24, 0xf0 ])
-
+        self.kstest(KS_ARCH_ARM, KS_MODE_ARM + KS_MODE_XSCALE, b"nop", [ 0x00, 0x00, 0xa0, 0xe1 ])
+        self.kstest(KS_ARCH_ARM, KS_MODE_ARM + KS_MODE_BIG_ENDIAN + KS_MODE_XSCALE, b"nop", [ 0xe1, 0xa0, 0x00, 0x00 ])
+        self.kstest(KS_ARCH_ARM, KS_MODE_ARM + KS_MODE_V4, b"nop", [ 0x00, 0x00, 0xa0, 0xe1 ])
+        self.kstest(KS_ARCH_ARM, KS_MODE_ARM + KS_MODE_BIG_ENDIAN + KS_MODE_V4, b"nop", [ 0xe1, 0xa0, 0x00, 0x00 ])
+        self.kstest(KS_ARCH_ARM, KS_MODE_ARM + KS_MODE_V5, b"nop", [ 0x00, 0x00, 0xa0, 0xe1 ])
+        self.kstest(KS_ARCH_ARM, KS_MODE_ARM + KS_MODE_BIG_ENDIAN + KS_MODE_V5, b"nop", [ 0xe1, 0xa0, 0x00, 0x00 ])
+ 
         # ARM64
         self.kstest(KS_ARCH_ARM64, KS_MODE_LITTLE_ENDIAN, b"ldr w1, [sp, #0x8]", [ 0xe1, 0x0b, 0x40, 0xb9 ])
 

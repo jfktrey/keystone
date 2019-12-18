@@ -30,6 +30,36 @@ kstool armbe "sub r1, r2, r5"
 #encoding: [0x05,0x10,0x42,0xe0]
 echo
 
+echo "::XScale"
+kstool xscale "nop"
+#encoding: [0x00, 0x00, 0xa0, 0xe1]
+echo
+
+echo "::XScale BE"
+kstool xscalebe "nop"
+#encoding: [0xe1, 0xa0, 0x00, 0x00]
+echo
+
+echo "::ARMv4t"
+kstool armv4t "nop"
+#encoding: [0x00, 0x00, 0xa0, 0xe1]
+echo
+
+echo "::ARMv4t BE"
+kstool armv4tbe "nop"
+#encoding: [0xe1, 0xa0, 0x00, 0x00]
+echo
+
+echo "::ARMv5"
+kstool armv5 "nop"
+#encoding: [0x00, 0x00, 0xa0, 0xe1]
+echo
+
+echo "::ARMv5 BE"
+kstool armv5be "nop"
+#encoding: [0xe1, 0xa0, 0x00, 0x00]
+echo
+
 echo "::Thumb LE"
 kstool thumb "movs r4, #0xf0"
 #encoding: [0xf0,0x24]
